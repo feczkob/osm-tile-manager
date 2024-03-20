@@ -1,5 +1,9 @@
 package com.feczkob.osmtiles
 
+import com.feczkob.osmtiles.generatable.GeneratableArea
+import com.feczkob.osmtiles.model.Area
+import com.feczkob.osmtiles.model.Point
+
 fun main() {
 //    val minLat = 47.4683
 //    val maxLat = 47.5209
@@ -20,11 +24,13 @@ fun main() {
     println(tile.bottomRight())
 
     val area =
-        Area(
-            topLeft = topLeft,
-            bottomRight = bottomRight,
-            startZoom = 13,
-            endZoom = 13,
+        GeneratableArea(
+            Area(
+                topLeft = topLeft,
+                bottomRight = bottomRight,
+                startZoom = 13,
+                endZoom = 14,
+            ),
             basePath = "/Users/work/IdeaProjects/osm-tile-manager/tiles",
         )
     area.generate()

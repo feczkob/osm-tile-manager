@@ -1,4 +1,4 @@
-package com.feczkob.osmtiles
+package com.feczkob.osmtiles.model
 
 import kotlin.math.PI
 import kotlin.math.asinh
