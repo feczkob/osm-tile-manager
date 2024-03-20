@@ -11,6 +11,7 @@ class Zoom(
 ) : Generatable {
     private val path = "$basePath/$level"
 
+    // TODO make numOfColumns = numOfTiles in a Column to get square
     private val columns: Set<Column> =
         (topLeft.x..bottomRight.x).map { x ->
             Column(x, topLeft, bottomRight, level, x, path)
