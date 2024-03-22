@@ -26,6 +26,8 @@ class Tile(
         return Point(latDeg, lonDeg)
     }
 
+//    fun bottomRight() = Tile(zoom, x + 1, y + 1).topLeft()
+
     fun rangeX(other: Tile) = x..other.x
 
     fun rangeY(other: Tile) = y..other.y
@@ -35,4 +37,10 @@ class Tile(
     fun printToUrl() = "$zoom/$x/$y.png"
 
     fun printToPath(basePath: String) = "$basePath/$y"
+
+    operator fun plus(op: Pair<Int, Int>) = Tile(zoom, x + op.first, y + op.second)
+
+    operator fun minus(op: Pair<Int, Int>) = plus(-op)
 }
+
+operator fun Pair<Int, Int>.unaryMinus() = Pair(-first, -second)

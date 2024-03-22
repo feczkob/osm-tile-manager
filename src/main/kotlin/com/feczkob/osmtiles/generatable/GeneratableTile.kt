@@ -23,7 +23,7 @@ class GeneratableTile(
             bufferedOutputStream.close()
             outputStream.close()
 
-            println("Tile saved to: $path.png")
+//            println("Tile saved to: $path.png")
         } else {
             println("Failed to fetch tile.")
         }
