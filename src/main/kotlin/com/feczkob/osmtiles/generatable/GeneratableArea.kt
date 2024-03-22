@@ -24,16 +24,7 @@ class GeneratableArea(
         generateRest()
     }
 
-    private fun generateZoom(
-        zoomLevel: Int,
-        topLeft: Tile,
-        bottomRight: Tile,
-    ) {
-        print("Zoom level $zoomLevel generation: Started...")
-        val zoom = Zoom(zoomLevel, topLeft, bottomRight, path)
-        zoom.generate()
-        println("Finished")
-    }
+    override fun ensurePathExists() = require(File(path).exists()) { "Base path must exist." }
 
     private fun generateFirst() {
         generateZoom(zoom.first, topLeft, bottomRight)
@@ -49,5 +40,14 @@ class GeneratableArea(
         }
     }
 
-    override fun ensurePathExists() = require(File(path).exists()) { "Base path must exist." }
+    private fun generateZoom(
+        zoomLevel: Int,
+        topLeft: Tile,
+        bottomRight: Tile,
+    ) {
+        print("Zoom level $zoomLevel generation: Started...")
+        val zoom = Zoom(zoomLevel, topLeft, bottomRight, path)
+        zoom.generate()
+        println("Finished")
+    }
 }

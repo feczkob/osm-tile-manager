@@ -30,8 +30,6 @@ class Tile(
 
     fun rangeY(other: Tile) = y..other.y
 
-    override fun toString(): String = "Tile(zoom=$zoom, x=$x, y=$y)"
-
     fun printToUrl() = "$zoom/$x/$y.png"
 
     fun printToPath(basePath: String) = "$basePath/$y"
@@ -39,6 +37,8 @@ class Tile(
     operator fun plus(op: Pair<Int, Int>) = Tile(zoom, x + op.first, y + op.second)
 
     operator fun minus(op: Pair<Int, Int>) = plus(-op)
+
+    override fun toString(): String = "Tile(zoom=$zoom, x=$x, y=$y)"
 }
 
 operator fun Pair<Int, Int>.unaryMinus() = Pair(-first, -second)
