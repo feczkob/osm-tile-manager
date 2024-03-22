@@ -22,6 +22,7 @@ class GeneratableArea(
         ensurePathExists()
         generateFirst()
         generateRest()
+        printReadme()
         println("Generated area: ${Area(topLeft.topLeft(), bottomRight.bottomRight())}")
     }
 
@@ -49,5 +50,18 @@ class GeneratableArea(
         val zoom = Zoom(zoomLevel, topLeft, bottomRight, path)
         zoom.generate()
         println("Finished")
+    }
+
+    private fun printReadme() {
+        val fileName = "$path/README.md"
+        val file = File(fileName)
+        val writer = file.printWriter()
+        writer.use {
+            it.print(
+                "The tiles are generated of the following area:\n" +
+                    "topLeft: ${topLeft.topLeft().printToReadme()},\n" +
+                    "bottomRight: ${bottomRight.bottomRight().printToReadme()}",
+            )
+        }
     }
 }
