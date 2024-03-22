@@ -6,9 +6,10 @@ import com.feczkob.osmtiles.model.Point
 import io.github.cdimascio.dotenv.Dotenv
 
 fun main() {
-    val minLat = 47.4724
     val maxLat = 47.5189
     val minLong = 19.0129
+
+    val minLat = 47.4724
     val maxLong = 19.0829
 
     val topLeft = Point(maxLat, minLong)

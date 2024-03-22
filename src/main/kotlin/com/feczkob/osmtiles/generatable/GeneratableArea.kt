@@ -22,6 +22,7 @@ class GeneratableArea(
         ensurePathExists()
         generateFirst()
         generateRest()
+        println("Generated area: ${Area(topLeft.topLeft(), bottomRight.bottomRight())}")
     }
 
     override fun ensurePathExists() = require(File(path).exists()) { "Base path must exist." }
@@ -34,7 +35,6 @@ class GeneratableArea(
         for (zoomLevel in zoom.first + 1..zoom.last) {
             val topLeftTile = topLeft.topLeft().enclosingTile(zoomLevel)
             // bottom right's bottom right is returned as top left of the bottom right tile + (1, 1) by enclosingTile()
-            // TODO adjust bottomRight() method
             val bottomRightTile = bottomRight.bottomRight().enclosingTile(zoomLevel) - (1 to 1)
             generateZoom(zoomLevel, topLeftTile, bottomRightTile)
         }

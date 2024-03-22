@@ -11,6 +11,7 @@ class Zoom(
 ) : Generatable {
     override val path = "$basePath/$level"
 
+    // it's not ensured to be a square
     private val columns: Set<Column> =
         (topLeft.rangeX(bottomRight)).map { x ->
             Column(x, topLeft.rangeY(bottomRight), level, path)
