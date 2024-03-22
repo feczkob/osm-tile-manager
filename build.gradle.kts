@@ -11,12 +11,8 @@ repositories {
 
 dependencies {
     implementation("io.github.cdimascio:dotenv-java:2.2.0")
-    testImplementation("org.jetbrains.kotlin:kotlin-test")
 }
 
-tasks.test {
-    useJUnitPlatform()
-}
 kotlin {
     jvmToolchain(17)
 }
