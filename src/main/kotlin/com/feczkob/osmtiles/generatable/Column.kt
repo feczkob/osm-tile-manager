@@ -7,14 +7,13 @@ class Column(
     private val number: Int,
     yRange: IntRange,
     level: Int,
-    colNum: Int,
     basePath: String,
 ) : Generatable {
     override val path = "$basePath/$number"
 
     private val tiles: Set<GeneratableTile> =
         yRange.map { y ->
-            GeneratableTile(Tile(level, colNum, y), path)
+            GeneratableTile(Tile(level, number, y), path)
         }.toSet()
 
     override fun generate() {
