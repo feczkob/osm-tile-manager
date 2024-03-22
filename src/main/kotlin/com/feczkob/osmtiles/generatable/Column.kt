@@ -5,16 +5,15 @@ import java.io.File
 
 class Column(
     private val number: Int,
-    topLeft: Tile,
-    bottomRight: Tile,
+    yRange: IntRange,
     level: Int,
     colNum: Int,
     basePath: String,
 ) : Generatable {
-    private val path = "$basePath/$number"
+    override val path = "$basePath/$number"
 
     private val tiles: Set<GeneratableTile> =
-        (topLeft.y..bottomRight.y).map { y ->
+        yRange.map { y ->
             GeneratableTile(Tile(level, colNum, y), path)
         }.toSet()
 

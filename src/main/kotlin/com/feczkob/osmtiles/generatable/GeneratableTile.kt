@@ -12,7 +12,7 @@ class GeneratableTile(
     private val tile: Tile,
     private val basePath: String,
 ) : Generatable {
-    private val path = "$basePath/${tile.y}"
+    override val path = tile.printToPath(basePath)
 
     override fun generate() {
         val fetchedData = fetch()
@@ -35,7 +35,7 @@ class GeneratableTile(
 
     private fun fetch() =
         try {
-            val url = URL("https://tile.openstreetmap.org/${tile.zoom}/${tile.x}/${tile.y}.png")
+            val url = URL("https://tile.openstreetmap.org/${tile.printToUrl()}")
             val connection = url.openConnection() as HttpURLConnection
             // OSM requires a user-agent
             connection.setRequestProperty("User-Agent", "Chrome/120.0.0.0 Safari/537.36")

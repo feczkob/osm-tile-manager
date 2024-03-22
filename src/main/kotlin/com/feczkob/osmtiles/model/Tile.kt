@@ -5,9 +5,9 @@ import kotlin.math.atan
 import kotlin.math.sinh
 
 class Tile(
-    val zoom: Int,
-    val x: Int,
-    val y: Int,
+    private val zoom: Int,
+    private val x: Int,
+    private val y: Int,
 ) {
     // * https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames
     fun topLeft(): Point {
@@ -26,5 +26,13 @@ class Tile(
         return Point(latDeg, lonDeg)
     }
 
+    fun rangeX(other: Tile) = x..other.x
+
+    fun rangeY(other: Tile) = y..other.y
+
     override fun toString(): String = "Tile(zoom=$zoom, x=$x, y=$y)"
+
+    fun printToUrl() = "$zoom/$x/$y.png"
+
+    fun printToPath(basePath: String) = "$basePath/$y"
 }

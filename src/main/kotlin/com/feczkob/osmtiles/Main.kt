@@ -29,9 +29,9 @@ fun main() {
                 topLeft = topLeft,
                 bottomRight = bottomRight,
                 startZoom = 13,
-                endZoom = 14,
+                endZoom = 13,
             ),
-            basePath = "/Users/work/IdeaProjects/osm-tile-manager/tiles",
+            path = "/Users/work/IdeaProjects/osm-tile-manager/tiles",
         )
     area.generate()
 }
