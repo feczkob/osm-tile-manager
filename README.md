@@ -1,7 +1,11 @@
 # OSM Tile Manager
 
-OSM Tile Manager is a Kotlin application that allows you to download map tiles from a specified area and range of zoom levels. 
+OSM Tile Manager is a Kotlin application that allows you to download map tiles from a specified area and range of zoom levels as `.png` pictures. 
 The downloaded tiles follow the `/zoom/x/y` convention, making them compatible with various mapping libraries and applications (e.g. [MapCompose](https://github.com/p-lr/MapCompose)).
+
+Please consider the [OpenStreetMap tile usage policy](https://operations.osmfoundation.org/policies/tiles/) and the 
+[OSM Wiki Downloading data](https://wiki.openstreetmap.org/wiki/Downloading_data) before using this application.
+Download the tiles responsibly and avoid overloading the OSM servers.
 
 ## Features
 
