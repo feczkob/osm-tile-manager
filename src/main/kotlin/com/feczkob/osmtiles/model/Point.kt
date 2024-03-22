@@ -21,7 +21,7 @@ class Point(
         return if (latDiff != 0) latDiff else longitude.compareTo(other.longitude)
     }
 
-    fun printToReadme() = "\n\tlatitude: $latitude,\n\tlongitude: $longitude"
+    fun printToReadme() = "\n```\nlatitude: $latitude,\nlongitude: $longitude\n```\n"
 
     override fun toString(): String = "Point(latitude=$latitude, longitude=$longitude)"
 }

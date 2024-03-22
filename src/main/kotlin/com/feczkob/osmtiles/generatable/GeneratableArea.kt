@@ -58,9 +58,9 @@ class GeneratableArea(
         val writer = file.printWriter()
         writer.use {
             it.print(
-                "The tiles are generated of the following area:\n" +
-                    "topLeft: ${topLeft.topLeft().printToReadme()},\n" +
-                    "bottomRight: ${bottomRight.bottomRight().printToReadme()}",
+                "The tiles are generated of the following area:\n\n" +
+                    "`topLeft:` ${topLeft.topLeft().printToReadme()}" +
+                    "`bottomRight:` ${bottomRight.bottomRight().printToReadme()}",
             )
         }
     }
