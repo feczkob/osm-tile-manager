@@ -26,8 +26,6 @@ class Tile(
         return Point(latDeg, lonDeg)
     }
 
-//    fun bottomRight() = Tile(zoom, x + 1, y + 1).topLeft()
-
     fun rangeX(other: Tile) = x..other.x
 
     fun rangeY(other: Tile) = y..other.y

@@ -12,4 +12,10 @@ class Area(
         require(endZoom in 0..18) { "End zoom must be between 0 and 18." }
         require(startZoom <= endZoom) { "Start zoom must be less than or equal to end zoom." }
     }
+
+    fun enclosingTile(zoom: Int): Pair<Tile, Tile> {
+        val topLeftTile = topLeft.enclosingTile(zoom)
+        val bottomRightTile = bottomRight.enclosingTile(zoom)
+        return topLeftTile to bottomRightTile
+    } // TODO
 }

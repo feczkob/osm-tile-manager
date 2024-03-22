@@ -13,24 +13,31 @@ class GeneratableArea(
 
     override fun generate() {
         ensurePathExists()
-        val zoom1 = Zoom(area.startZoom, topLeft, bottomRight, path)
-        zoom1.generate()
-
-        for (zoomLevel in area.startZoom + 1..area.endZoom) {
-            val topLeftTile = topLeft.topLeft().enclosingTile(zoomLevel)
-            val bottomRightTile = bottomRight.bottomRight().enclosingTile(zoomLevel) - (1 to 1)
-            val zoom = Zoom(zoomLevel, topLeftTile, bottomRightTile, path)
-            zoom.generate()
-        }
+        generateFirst()
+        generateRest()
     }
 
     private fun generateZoom(
+        zoomLevel: Int,
         topLeft: Tile,
         bottomRight: Tile,
-        zoomLevel: Int,
     ) {
+        print("Zoom level $zoomLevel generation: Started...")
         val zoom = Zoom(zoomLevel, topLeft, bottomRight, path)
         zoom.generate()
+        println("Finished")
+    }
+
+    private fun generateFirst() {
+        generateZoom(area.startZoom, topLeft, bottomRight)
+    }
+
+    private fun generateRest() {
+        for (zoomLevel in area.startZoom + 1..area.endZoom) {
+            val topLeftTile = topLeft.topLeft().enclosingTile(zoomLevel)
+            val bottomRightTile = bottomRight.bottomRight().enclosingTile(zoomLevel) - (1 to 1)
+            generateZoom(zoomLevel, topLeftTile, bottomRightTile)
+        }
     }
 
     override fun ensurePathExists() = require(File(path).exists()) { "Base path must exist." }

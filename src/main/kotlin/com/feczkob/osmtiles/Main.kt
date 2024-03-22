@@ -6,11 +6,6 @@ import com.feczkob.osmtiles.model.Point
 import com.feczkob.osmtiles.model.Tile
 
 fun main() {
-//    val minLat = 47.4683
-//    val maxLat = 47.5209
-//    val minLong = 19.0148
-//    val maxLong = 20.3348
-
     val minLat = 47.4724
     val maxLat = 47.5189
     val minLong = 19.0129
@@ -19,18 +14,13 @@ fun main() {
     val topLeft = Point(maxLat, minLong)
     val bottomRight = Point(minLat, maxLong)
 
-    val tile = topLeft.enclosingTile(13)
-//    println(tile)
-//    println(tile.topLeft())
-//    println(tile.bottomRight())
-
     val area =
         GeneratableArea(
             Area(
                 topLeft = topLeft,
                 bottomRight = bottomRight,
                 startZoom = 13,
-                endZoom = 15,
+                endZoom = 14,
             ),
             path = "/Users/work/IdeaProjects/osm-tile-manager/tiles",
         )

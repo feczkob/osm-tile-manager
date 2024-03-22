@@ -5,7 +5,6 @@ import java.io.File
 
 class Zoom(
     level: Int,
-//    private val columns: Set<Column>,
     topLeft: Tile,
     bottomRight: Tile,
     basePath: String,
