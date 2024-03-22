@@ -5,11 +5,18 @@ import com.feczkob.osmtiles.model.Tile
 import java.io.File
 
 class GeneratableArea(
-    private val area: Area,
+    area: Area,
     override val path: String,
+    private val zoom: IntRange,
 ) : Generatable {
-    private val topLeft: Tile = area.topLeft.enclosingTile(area.startZoom)
-    private val bottomRight: Tile = area.bottomRight.enclosingTile(area.startZoom)
+    init {
+        require(!zoom.isEmpty()) { "Zoom range must not be empty." }
+        require(zoom.first in 0..18) { "Start zoom must be between 0 and 18." }
+        require(zoom.last in 0..18) { "End zoom must be between 0 and 18." }
+    }
+
+    private val topLeft: Tile = area.topLeftTile(zoom.first)
+    private val bottomRight: Tile = area.bottomRightTile(zoom.first)
 
     override fun generate() {
         ensurePathExists()
@@ -29,12 +36,14 @@ class GeneratableArea(
     }
 
     private fun generateFirst() {
-        generateZoom(area.startZoom, topLeft, bottomRight)
+        generateZoom(zoom.first, topLeft, bottomRight)
     }
 
     private fun generateRest() {
-        for (zoomLevel in area.startZoom + 1..area.endZoom) {
+        for (zoomLevel in zoom.first + 1..zoom.last) {
             val topLeftTile = topLeft.topLeft().enclosingTile(zoomLevel)
+            // bottom right's bottom right is returned as top left of the bottom right tile + (1, 1) by enclosingTile()
+            // TODO adjust bottomRight() method
             val bottomRightTile = bottomRight.bottomRight().enclosingTile(zoomLevel) - (1 to 1)
             generateZoom(zoomLevel, topLeftTile, bottomRightTile)
         }
