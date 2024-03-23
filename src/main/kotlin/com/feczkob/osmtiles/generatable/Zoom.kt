@@ -8,7 +8,7 @@ class Zoom(
     topLeft: Tile,
     bottomRight: Tile,
     basePath: String,
-) : Generatable {
+) : Fetchable {
     override val path = "$basePath/$level"
 
     // it's not ensured to be a square
@@ -17,12 +17,10 @@ class Zoom(
             Column(x, topLeft.rangeY(bottomRight), level, path)
         }.toSet()
 
-    override fun generate() {
-        ensurePathExists()
+    override fun generate() =
         columns.forEach { column ->
-            column.generate()
+            column.fetch()
         }
-    }
 
     override fun ensurePathExists() {
         val directory = File(path)

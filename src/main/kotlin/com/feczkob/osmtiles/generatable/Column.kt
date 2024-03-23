@@ -8,20 +8,18 @@ class Column(
     yRange: IntRange,
     level: Int,
     basePath: String,
-) : Generatable {
+) : Fetchable {
     override val path = "$basePath/$number"
 
-    private val tiles: Set<GeneratableTile> =
+    private val tiles: Set<FetchableTile> =
         yRange.map { y ->
-            GeneratableTile(Tile(level, number, y), path)
+            FetchableTile(Tile(level, number, y), path)
         }.toSet()
 
-    override fun generate() {
-        ensurePathExists()
+    override fun generate() =
         tiles.forEach { tile ->
-            tile.generate()
+            tile.fetch()
         }
-    }
 
     override fun ensurePathExists() {
         val directory = File(path)

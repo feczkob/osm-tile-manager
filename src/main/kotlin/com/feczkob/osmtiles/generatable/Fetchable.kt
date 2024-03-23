@@ -1,7 +1,12 @@
 package com.feczkob.osmtiles.generatable
 
-interface Generatable {
+interface Fetchable {
     val path: String
+
+    fun fetch() {
+        ensurePathExists()
+        generate()
+    }
 
     fun generate()
 

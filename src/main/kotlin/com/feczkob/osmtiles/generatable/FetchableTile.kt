@@ -8,22 +8,20 @@ import java.io.FileOutputStream
 import java.net.HttpURLConnection
 import java.net.URL
 
-class GeneratableTile(
+class FetchableTile(
     private val tile: Tile,
     private val basePath: String,
-) : Generatable {
+) : Fetchable {
     override val path = tile.printToPath(basePath)
 
     override fun generate() {
-        val fetchedData = fetch()
+        val fetchedData = fetchTile()
         if (fetchedData != null) {
             val outputStream = FileOutputStream("$path.png")
             val bufferedOutputStream = BufferedOutputStream(outputStream)
             bufferedOutputStream.write(fetchedData.readBytes())
             bufferedOutputStream.close()
             outputStream.close()
-
-//            println("Tile saved to: $path.png")
         } else {
             println("Failed to fetch tile.")
         }
@@ -33,7 +31,7 @@ class GeneratableTile(
         require(File(basePath).exists()) { "Base path must exist." }
     }
 
-    private fun fetch() =
+    private fun fetchTile() =
         try {
             val url = URL("https://tile.openstreetmap.org/${tile.printToUrl()}")
             val connection = url.openConnection() as HttpURLConnection

@@ -1,6 +1,6 @@
 package com.feczkob.osmtiles
 
-import com.feczkob.osmtiles.generatable.GeneratableArea
+import com.feczkob.osmtiles.generatable.FetchableArea
 import com.feczkob.osmtiles.model.Area
 import com.feczkob.osmtiles.model.Point
 import io.github.cdimascio.dotenv.Dotenv
@@ -32,7 +32,7 @@ fun main() {
     val maxZoom = dotenv[MAX_ZOOM]?.toInt() ?: error("$MAX_ZOOM $ENVIRONMENT_VARIABLE_IS_NOT_SET")
 
     val area =
-        GeneratableArea(
+        FetchableArea(
             Area(
                 topLeft = topLeft,
                 bottomRight = bottomRight,
@@ -40,8 +40,5 @@ fun main() {
             path = path,
             zoom = minZoom..maxZoom,
         )
-    area.generate()
-
-//    val tile1 = Tile(14, 9061, 5731)
-//    println("${tile1.bottomRight()}")
+    area.fetch()
 }
