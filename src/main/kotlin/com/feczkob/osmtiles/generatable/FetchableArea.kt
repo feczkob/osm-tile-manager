@@ -18,7 +18,15 @@ class FetchableArea(
         require(zoom.last in 0..18) { "End zoom must be between 0 and 18." }
     }
 
-    private val area = Area(area.topLeftTile(zoom.first).topLeft(), area.bottomRightTile(zoom.first).bottomRight())
+    private val area =
+        Area(
+            // be aware that there are two area.bottomRightTile calls
+            // and that call uses the lateinit var
+            area.topLeftTile(zoom.first).topLeft(),
+            (area.bottomRightTile(zoom.first)).bottomRight().also {
+                println(it)
+            },
+        )
 
     override suspend fun generate() {
         val timeTaken =
@@ -36,7 +44,7 @@ class FetchableArea(
     override fun ensurePathExists() = require(File(path).exists()) { "Base path must exist." }
 
     private suspend fun generateFirst() {
-        fetchZoom(zoom.first, area.topLeftTile(zoom.first), area.bottomRightTile(zoom.first))
+        fetchZoom(zoom.first, area.topLeftTile(zoom.first), area.bottomRightTile(zoom.first) - (1 to 1))
     }
 
     private suspend fun generateRest() =
@@ -44,7 +52,6 @@ class FetchableArea(
             for (zoomLevel in zoom.first + 1..zoom.last) {
                 launch {
                     val topLeftTile = area.topLeftTile(zoomLevel)
-                    // bottom right's bottom right is returned as top left of the bottom right tile + (1, 1) by enclosingTile()
                     val bottomRightTile = area.bottomRightTile(zoomLevel) - (1 to 1)
                     fetchZoom(zoomLevel, topLeftTile, bottomRightTile)
                 }

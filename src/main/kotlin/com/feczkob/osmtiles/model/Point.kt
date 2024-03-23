@@ -8,6 +8,7 @@ class Point(
     private val latitude: Double,
     private val longitude: Double,
 ) {
+    // bottom right tile's bottom right point is returned as top left point of the bottom right tile + (1, 1) by enclosingTile()
     fun enclosingTile(zoom: Int): Tile {
         val latRad = Math.toRadians(latitude)
         val n = 1 shl zoom
