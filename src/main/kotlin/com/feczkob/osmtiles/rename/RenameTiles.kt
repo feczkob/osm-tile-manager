@@ -12,7 +12,9 @@ fun main() {
 fun renameFilesAndDirectories(file: File) {
     if (!file.exists() || !file.isDirectory) return
 
-    file.listFiles()?.filter { it.name != ".DS_Store" }
+    file.listFiles()
+        ?.filter { it.name != ".DS_Store" }
+        ?.filter { it.name != "README.md" }
         ?.sortedBy { it.name }
         ?.forEachIndexed { index, f ->
             if (f.isDirectory) {

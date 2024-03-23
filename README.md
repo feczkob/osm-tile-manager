@@ -50,13 +50,31 @@ See `.env.example` for an example.
 
 ### Tile Download
 
-To download the tiles, run the `main()` method in the `GenerateTiles.kt` file. 
+To download the tiles, 
+1. execute the following command:
+
+    ```bash
+    ./gradlew fetchTiles
+    ```
+
+    or
+2. run the `main()` method in the `GenerateTiles.kt` file.
+
 Verify that the tiles have been downloaded in the specified directory.
 Read the `README.md` file next to the tiles for more information.
 
 ### Tile Renaming
 
-To rename the downloaded tiles, run the `main()` method in the `RenameTiles.kt` file.
+To rename the downloaded tiles, 
+1. execute the following command:
+
+    ```bash
+    ./gradlew renameTiles
+    ```
+
+    or
+2. run the `main()` method in the `RenameTiles.kt` file.
+
 Verify that the previously downloaded tiles have been renamed according to the specified convention.
 
 

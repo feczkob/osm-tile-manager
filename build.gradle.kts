@@ -18,6 +18,16 @@ kotlin {
     jvmToolchain(17)
 }
 
-application {
-//    mainClass = "com.feczkob.osmtiles.GenerateTilesKt"
+tasks.register<JavaExec>("fetchTiles") {
+    group = "tiles"
+    description = "Fetches the tiles from OSM"
+    mainClass = "com.feczkob.osmtiles.GenerateTilesKt"
+    classpath = sourceSets.main.get().runtimeClasspath
+}
+
+tasks.register<JavaExec>("renameTiles") {
+    group = "tiles"
+    description = "Renames the tiles to start from 0,0"
+    mainClass = "com.feczkob.osmtiles.rename.RenameTilesKt"
+    classpath = sourceSets.main.get().runtimeClasspath
 }
