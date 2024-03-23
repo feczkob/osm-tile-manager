@@ -8,9 +8,9 @@ class Area(
         require(topLeft > bottomRight) { "Top left corner must be above the bottom right corner." }
     }
 
-    fun topLeftTile(zoom: Int) = topLeft.enclosingTile(zoom)
+    fun topLeftTile(zoom: Int): Tile = topLeft.enclosingTile(zoom)
 
-    fun bottomRightTile(zoom: Int) = bottomRight.enclosingTile(zoom)
+    fun bottomRightTile(zoom: Int): Tile = bottomRight.enclosingTile(zoom)
 
     fun printToConsole() = "Top left: ${topLeft.printToConsole()},\nBottom right: ${bottomRight.printToConsole()}"
 
