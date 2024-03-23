@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm") version "1.9.22"
+    application
 }
 
 group = "com.feczkob.osmtiles"
@@ -15,4 +16,8 @@ dependencies {
 
 kotlin {
     jvmToolchain(17)
+}
+
+application {
+//    mainClass = "com.feczkob.osmtiles.GenerateTilesKt"
 }
