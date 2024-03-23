@@ -14,5 +14,9 @@ class Area(
 
     fun printToConsole() = "Top left: ${topLeft.printToConsole()},\nBottom right: ${bottomRight.printToConsole()}"
 
+    fun printToReadme() =
+        "`topLeft:` ${topLeft.printToReadme()}" +
+            "`bottomRight:` ${bottomRight.printToReadme()}"
+
     override fun toString(): String = "Area(topLeft=$topLeft, bottomRight=$bottomRight)"
 }
