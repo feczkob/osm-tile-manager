@@ -57,10 +57,10 @@ class FetchableArea(
         topLeft: Tile,
         bottomRight: Tile,
     ) {
-        print("Fetching zoom level $zoomLevel: Started...")
+        println("Fetching zoom level $zoomLevel...")
         val zoom = Zoom(zoomLevel, topLeft, bottomRight, path)
         zoom.fetch()
-        println("Finished")
+        println("Zoom level $zoomLevel is finished")
     }
 
     private fun printReadme() {
@@ -74,5 +74,6 @@ class FetchableArea(
                     "`bottomRight:` ${bottomRight.bottomRight().printToReadme()}",
             )
         }
+        println("README.md printed to $fileName")
     }
 }
