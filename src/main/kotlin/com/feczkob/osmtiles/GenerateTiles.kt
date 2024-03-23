@@ -4,7 +4,6 @@ import com.feczkob.osmtiles.generatable.FetchableArea
 import com.feczkob.osmtiles.model.Area
 import com.feczkob.osmtiles.model.Point
 import io.github.cdimascio.dotenv.Dotenv
-import kotlinx.coroutines.runBlocking
 
 private const val TOP_LEFT_LAT = "TOP_LEFT_LAT"
 private const val TOP_LEFT_LON = "TOP_LEFT_LON"
@@ -15,7 +14,7 @@ private const val MIN_ZOOM = "MIN_ZOOM"
 private const val MAX_ZOOM = "MAX_ZOOM"
 private const val ENVIRONMENT_VARIABLE_IS_NOT_SET = "environment variable is not set"
 
-fun main() {
+suspend fun main() {
     val dotenv = Dotenv.load()
 
     val maxLat = dotenv[TOP_LEFT_LAT] ?: error("$TOP_LEFT_LAT $ENVIRONMENT_VARIABLE_IS_NOT_SET")
@@ -41,5 +40,5 @@ fun main() {
             path = path,
             zoom = minZoom..maxZoom,
         )
-    runBlocking { area.fetch() }
+    area.fetch()
 }

@@ -24,8 +24,6 @@ class FetchableTile(
                 bufferedOutputStream.write(fetchedData.readBytes())
                 bufferedOutputStream.close()
                 outputStream.close()
-
-                println("Tile saved to: $path.png")
             } else {
                 println("Failed to fetch tile.")
             }
