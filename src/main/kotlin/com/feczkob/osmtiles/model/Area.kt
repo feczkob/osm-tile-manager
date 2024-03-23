@@ -12,5 +12,7 @@ class Area(
 
     fun bottomRightTile(zoom: Int) = bottomRight.enclosingTile(zoom)
 
+    fun printToConsole() = "Top left: ${topLeft.printToConsole()},\nBottom right: ${bottomRight.printToConsole()}"
+
     override fun toString(): String = "Area(topLeft=$topLeft, bottomRight=$bottomRight)"
 }

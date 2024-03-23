@@ -3,12 +3,12 @@ package com.feczkob.osmtiles.generatable
 interface Fetchable {
     val path: String
 
-    fun fetch() {
+    suspend fun fetch() {
         ensurePathExists()
         generate()
     }
 
-    fun generate()
+    suspend fun generate()
 
     fun ensurePathExists()
 }

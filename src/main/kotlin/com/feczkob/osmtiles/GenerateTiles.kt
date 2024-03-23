@@ -4,6 +4,7 @@ import com.feczkob.osmtiles.generatable.FetchableArea
 import com.feczkob.osmtiles.model.Area
 import com.feczkob.osmtiles.model.Point
 import io.github.cdimascio.dotenv.Dotenv
+import kotlinx.coroutines.runBlocking
 
 private const val TOP_LEFT_LAT = "TOP_LEFT_LAT"
 private const val TOP_LEFT_LON = "TOP_LEFT_LON"
@@ -40,5 +41,5 @@ fun main() {
             path = path,
             zoom = minZoom..maxZoom,
         )
-    area.fetch()
+    runBlocking { area.fetch() }
 }

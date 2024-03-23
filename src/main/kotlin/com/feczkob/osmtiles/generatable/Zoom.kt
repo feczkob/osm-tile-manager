@@ -1,6 +1,8 @@
 package com.feczkob.osmtiles.generatable
 
 import com.feczkob.osmtiles.model.Tile
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import java.io.File
 
 class Zoom(
@@ -17,9 +19,13 @@ class Zoom(
             Column(x, topLeft.rangeY(bottomRight), level, path)
         }.toSet()
 
-    override fun generate() =
-        columns.forEach { column ->
-            column.fetch()
+    override suspend fun generate() =
+        coroutineScope {
+            columns.forEach { column ->
+                launch {
+                    column.fetch()
+                }
+            }
         }
 
     override fun ensurePathExists() {

@@ -12,6 +12,7 @@ repositories {
 
 dependencies {
     implementation("io.github.cdimascio:dotenv-java:2.2.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
 }
 
 kotlin {

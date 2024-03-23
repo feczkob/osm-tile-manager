@@ -1,6 +1,7 @@
 package com.feczkob.osmtiles.generatable
 
 import com.feczkob.osmtiles.model.Tile
+import kotlinx.coroutines.coroutineScope
 import java.io.BufferedInputStream
 import java.io.BufferedOutputStream
 import java.io.File
@@ -14,18 +15,21 @@ class FetchableTile(
 ) : Fetchable {
     override val path = tile.printToPath(basePath)
 
-    override fun generate() {
-        val fetchedData = fetchTile()
-        if (fetchedData != null) {
-            val outputStream = FileOutputStream("$path.png")
-            val bufferedOutputStream = BufferedOutputStream(outputStream)
-            bufferedOutputStream.write(fetchedData.readBytes())
-            bufferedOutputStream.close()
-            outputStream.close()
-        } else {
-            println("Failed to fetch tile.")
+    override suspend fun generate() =
+        coroutineScope {
+            val fetchedData = fetchTile()
+            if (fetchedData != null) {
+                val outputStream = FileOutputStream("$path.png")
+                val bufferedOutputStream = BufferedOutputStream(outputStream)
+                bufferedOutputStream.write(fetchedData.readBytes())
+                bufferedOutputStream.close()
+                outputStream.close()
+
+                println("Tile saved to: $path.png")
+            } else {
+                println("Failed to fetch tile.")
+            }
         }
-    }
 
     override fun ensurePathExists() {
         require(File(basePath).exists()) { "Base path must exist." }

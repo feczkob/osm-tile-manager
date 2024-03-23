@@ -23,5 +23,7 @@ class Point(
 
     fun printToReadme() = "\n```\nlatitude: $latitude,\nlongitude: $longitude\n```\n"
 
+    fun printToConsole() = "\n\tLatitude: $latitude,\n\tLongitude: $longitude"
+
     override fun toString(): String = "Point(latitude=$latitude, longitude=$longitude)"
 }

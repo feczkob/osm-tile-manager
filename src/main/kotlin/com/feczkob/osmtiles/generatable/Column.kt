@@ -1,6 +1,8 @@
 package com.feczkob.osmtiles.generatable
 
 import com.feczkob.osmtiles.model.Tile
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import java.io.File
 
 class Column(
@@ -16,9 +18,13 @@ class Column(
             FetchableTile(Tile(level, number, y), path)
         }.toSet()
 
-    override fun generate() =
-        tiles.forEach { tile ->
-            tile.fetch()
+    override suspend fun generate() =
+        coroutineScope {
+            tiles.forEach { tile ->
+                launch {
+                    tile.fetch()
+                }
+            }
         }
 
     override fun ensurePathExists() {
