@@ -27,7 +27,7 @@ Download the tiles responsibly and avoid overloading the OSM servers.
     ```
 
 3. Create a `.env` file in the root of the project and set the following parameters. 
-Replace the values with the appropriate paths and coordinates for your desired area. 
+Replace the values with the appropriate path, coordinates of the desired area and zoom level(s). 
 See `.env.example` for an example.
 
     ```plaintext
@@ -61,6 +61,8 @@ To download the tiles,
 2. run the `main()` method in the `GenerateTiles.kt` file.
 
 Verify that the tiles have been downloaded in the specified directory.
+The fetched tiles cover the specified area (given in the `.env` file), and the same area is downloaded on all zoom levels.
+The coordinates of the specified area and the one being fetched are usually different.
 Read the `README.md` file next to the tiles for more information.
 
 ### Tile Renaming
