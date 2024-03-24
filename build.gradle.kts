@@ -17,6 +17,11 @@ dependencies {
 
 kotlin {
     jvmToolchain(17)
+    sourceSets.all {
+        languageSettings {
+            languageVersion = "2.0"
+        }
+    }
 }
 
 tasks.register<JavaExec>("fetchTiles") {
