@@ -1,7 +1,6 @@
 package com.feczkob.osmtiles.generatable
 
 import com.feczkob.osmtiles.model.Area
-import com.feczkob.osmtiles.model.Zoom
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import java.io.File
@@ -11,18 +10,18 @@ import kotlin.time.measureTime
 class FetchableArea(
     area: Area,
     override val path: String,
-    private val zoom: IntRange,
+    private val zoomLevels: IntRange,
 ) : Fetchable {
     init {
-        require(!zoom.isEmpty()) { "Zoom range must not be empty." }
-        require(zoom.first in 0..18) { "Start zoom must be between 0 and 18." }
-        require(zoom.last in 0..18) { "End zoom must be between 0 and 18." }
+        require(!zoomLevels.isEmpty()) { "Zoom range must not be empty." }
+        require(zoomLevels.first in 0..18) { "Start zoom must be between 0 and 18." }
+        require(zoomLevels.last in 0..18) { "End zoom must be between 0 and 18." }
     }
 
     private val area =
         Area(
-            area.topLeftTile(zoom.first).topLeft(),
-            (area.bottomRightTile(zoom.first)).bottomRight(),
+            area.topLeftTile(zoomLevels.first).topLeft(),
+            (area.bottomRightTile(zoomLevels.first)).bottomRight(),
         )
 
     override suspend fun generate() {
@@ -36,21 +35,18 @@ class FetchableArea(
 
     override fun ensurePathExists() = require(File(path).exists()) { "Base path must exist." }
 
-    private suspend fun fetchZooms() =
+    private suspend fun fetchZooms() {
         coroutineScope {
-            (zoom.first..zoom.last).forEach { zoomLevel ->
+            area.zooms(zoomLevels).map { zoom ->
                 launch {
                     FetchableZoom(
-                        Zoom(
-                            level = zoomLevel,
-                            colRange = area.topLeftTile(zoomLevel).rangeX(calculateBottomRight(zoomLevel)),
-                            rowRange = area.topLeftTile(zoomLevel).rangeY(calculateBottomRight(zoomLevel)),
-                        ),
+                        zoom = zoom,
                         basePath = path,
                     ).fetch()
                 }
             }
         }
+    }
 
     private fun printReadme() {
         val fileName = "$path/README.md"
@@ -68,7 +64,4 @@ class FetchableArea(
                 area.printToConsole(),
         )
     }
-
-    // bottom right tile's bottom right point is returned as top left point of the bottom right tile + (1, 1) by enclosingTile()
-    private fun calculateBottomRight(level: Int) = area.bottomRightTile(level) - (1 to 1)
 }

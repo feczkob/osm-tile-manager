@@ -18,5 +18,16 @@ class Area(
         "`topLeft:` ${topLeft.printToReadme()}" +
             "`bottomRight:` ${bottomRight.printToReadme()}"
 
+    fun zooms(zoomLevels: IntRange): Set<Zoom> = zoomLevels.map { createZoom(it) }.toSet()
+
+    private fun createZoom(level: Int): Zoom = Zoom(level, colRange(level), rowRange(level))
+
+    private fun colRange(zoom: Int): IntRange = topLeftTile(zoom).rangeX(calculateBottomRight(zoom))
+
+    private fun rowRange(zoom: Int): IntRange = topLeftTile(zoom).rangeY(calculateBottomRight(zoom))
+
+    // bottom right tile's bottom right point is returned as top left point of the bottom right tile + (1, 1) by enclosingTile()
+    private fun calculateBottomRight(level: Int) = bottomRightTile(level) - (1 to 1)
+
     override fun toString(): String = "Area(topLeft=$topLeft, bottomRight=$bottomRight)"
 }

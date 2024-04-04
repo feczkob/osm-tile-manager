@@ -38,7 +38,7 @@ suspend fun main() {
                 bottomRight = bottomRight,
             ),
             path = path,
-            zoom = minZoom..maxZoom,
+            zoomLevels = minZoom..maxZoom,
         )
     area.fetch()
 }
