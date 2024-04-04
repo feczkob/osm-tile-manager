@@ -1,21 +1,19 @@
 package com.feczkob.osmtiles.generatable
 
-import com.feczkob.osmtiles.model.Tile
+import com.feczkob.osmtiles.model.Column
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import java.io.File
 
-class Column(
-    private val number: Int,
-    yRange: IntRange,
-    level: Int,
+class FetchableColumn(
+    private val column: Column,
     basePath: String,
 ) : Fetchable {
-    override val path = "$basePath/$number"
+    override val path = column.printToPath(basePath)
 
     private val tiles: Set<FetchableTile> =
-        yRange.map { y ->
-            FetchableTile(Tile(level, number, y), path)
+        column.top().rangeY(column.bottom()).map { y ->
+            FetchableTile(column.createTile(y), path)
         }.toSet()
 
     override suspend fun generate() =
@@ -33,6 +31,4 @@ class Column(
             directory.mkdirs()
         }
     }
-
-    override fun toString(): String = "Column(number=$number, tiles=$tiles)"
 }

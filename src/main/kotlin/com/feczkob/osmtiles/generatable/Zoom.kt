@@ -1,6 +1,7 @@
 package com.feczkob.osmtiles.generatable
 
 import com.feczkob.osmtiles.model.Area
+import com.feczkob.osmtiles.model.Column
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import java.io.File
@@ -17,9 +18,9 @@ class Zoom(
     private val bottomRight = calculateBottomRight(area)
 
     // it's not ensured to be a square
-    private val columns: Set<Column> =
+    private val columns: Set<FetchableColumn> =
         (topLeft.rangeX(bottomRight)).map { x ->
-            Column(x, topLeft.rangeY(bottomRight), level, path)
+            FetchableColumn(Column(area, level, x), path)
         }.toSet()
 
     override suspend fun generate() {
