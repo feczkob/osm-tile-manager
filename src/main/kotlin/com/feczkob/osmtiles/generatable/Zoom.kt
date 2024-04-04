@@ -1,17 +1,21 @@
 package com.feczkob.osmtiles.generatable
 
-import com.feczkob.osmtiles.model.Tile
+import com.feczkob.osmtiles.model.Area
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import java.io.File
 
 class Zoom(
     private val level: Int,
-    topLeft: Tile,
-    bottomRight: Tile,
+    area: Area,
     basePath: String,
 ) : Fetchable {
     override val path = "$basePath/$level"
+
+    private val topLeft = area.topLeftTile(level)
+
+    // bottom right tile's bottom right point is returned as top left point of the bottom right tile + (1, 1) by enclosingTile()
+    private val bottomRight = area.bottomRightTile(level) - (1 to 1)
 
     // it's not ensured to be a square
     private val columns: Set<Column> =

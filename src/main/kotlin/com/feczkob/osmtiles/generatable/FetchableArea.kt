@@ -27,8 +27,7 @@ class FetchableArea(
     override suspend fun generate() {
         val timeTaken =
             measureTime {
-                fetchFirst()
-                fetchRest()
+                fetchZooms()
                 printReadme()
             }
         printSummary(timeTaken)
@@ -36,25 +35,10 @@ class FetchableArea(
 
     override fun ensurePathExists() = require(File(path).exists()) { "Base path must exist." }
 
-    private suspend fun fetchFirst() {
-        Zoom(
-            zoom.first,
-            area.topLeftTile(zoom.first),
-            (area.bottomRightTile(zoom.first) - (1 to 1)),
-            path,
-        ).fetch()
-    }
-
-    private suspend fun fetchRest() =
+    private suspend fun fetchZooms() =
         coroutineScope {
-            (zoom.first + 1..zoom.last).forEach { zoomLevel ->
-                launch {
-                    val topLeftTile = area.topLeftTile(zoomLevel)
-                    // bottom right tile's bottom right point is returned as top left point of the bottom right tile + (1, 1) by enclosingTile()
-                    val bottomRightTile = (area.bottomRightTile(zoomLevel) - (1 to 1))
-                    // separate abstraction levels, consider moving this to Zoom
-                    Zoom(zoomLevel, topLeftTile, bottomRightTile, path).fetch()
-                }
+            (zoom.first..zoom.last).forEach { zoomLevel ->
+                launch { Zoom(level = zoomLevel, area = area, basePath = path).fetch() }
             }
         }
 
