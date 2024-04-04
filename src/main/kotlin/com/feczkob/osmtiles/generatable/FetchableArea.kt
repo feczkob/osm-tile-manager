@@ -1,10 +1,10 @@
 package com.feczkob.osmtiles.generatable
 
 import com.feczkob.osmtiles.model.Area
-import com.feczkob.osmtiles.model.Tile
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import java.io.File
+import kotlin.time.Duration
 import kotlin.time.measureTime
 
 class FetchableArea(
@@ -27,48 +27,36 @@ class FetchableArea(
     override suspend fun generate() {
         val timeTaken =
             measureTime {
-                generateFirst()
-                generateRest()
+                fetchFirst()
+                fetchRest()
                 printReadme()
             }
-        println(
-            "The area was fetched in $timeTaken.\n" +
-                area.printToConsole(),
-        )
+        printSummary(timeTaken)
     }
 
     override fun ensurePathExists() = require(File(path).exists()) { "Base path must exist." }
 
-    private suspend fun generateFirst() {
-        fetchZoom(
+    private suspend fun fetchFirst() {
+        Zoom(
             zoom.first,
             area.topLeftTile(zoom.first),
             (area.bottomRightTile(zoom.first) - (1 to 1)),
-        )
+            path,
+        ).fetch()
     }
 
-    private suspend fun generateRest() =
+    private suspend fun fetchRest() =
         coroutineScope {
-            for (zoomLevel in zoom.first + 1..zoom.last) {
+            (zoom.first + 1..zoom.last).forEach { zoomLevel ->
                 launch {
                     val topLeftTile = area.topLeftTile(zoomLevel)
                     // bottom right tile's bottom right point is returned as top left point of the bottom right tile + (1, 1) by enclosingTile()
                     val bottomRightTile = (area.bottomRightTile(zoomLevel) - (1 to 1))
-                    fetchZoom(zoomLevel, topLeftTile, bottomRightTile)
+                    // separate abstraction levels, consider moving this to Zoom
+                    Zoom(zoomLevel, topLeftTile, bottomRightTile, path).fetch()
                 }
             }
         }
-
-    private suspend fun fetchZoom(
-        zoomLevel: Int,
-        topLeft: Tile,
-        bottomRight: Tile,
-    ) {
-        println("Fetching zoom level $zoomLevel...")
-        val zoom = Zoom(zoomLevel, topLeft, bottomRight, path)
-        zoom.fetch()
-        println("Zoom level $zoomLevel is finished")
-    }
 
     private fun printReadme() {
         val fileName = "$path/README.md"
@@ -78,5 +66,12 @@ class FetchableArea(
             it.print("The tiles are generated of the following area:\n\n" + area.printToReadme())
         }
         println("README.md printed to $fileName")
+    }
+
+    private fun printSummary(timeTaken: Duration) {
+        println(
+            "The area was fetched in $timeTaken.\n" +
+                area.printToConsole(),
+        )
     }
 }

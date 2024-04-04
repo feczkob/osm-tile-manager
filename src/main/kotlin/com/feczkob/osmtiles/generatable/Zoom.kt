@@ -6,7 +6,7 @@ import kotlinx.coroutines.launch
 import java.io.File
 
 class Zoom(
-    level: Int,
+    private val level: Int,
     topLeft: Tile,
     bottomRight: Tile,
     basePath: String,
@@ -19,7 +19,13 @@ class Zoom(
             Column(x, topLeft.rangeY(bottomRight), level, path)
         }.toSet()
 
-    override suspend fun generate() =
+    override suspend fun generate() {
+        printHeader()
+        fetchColumns()
+        printFooter()
+    }
+
+    private suspend fun fetchColumns() {
         coroutineScope {
             columns.forEach { column ->
                 launch {
@@ -27,6 +33,15 @@ class Zoom(
                 }
             }
         }
+    }
+
+    private fun printHeader() {
+        println("Fetching zoom level $level...")
+    }
+
+    private fun printFooter() {
+        println("Zoom level $level is finished")
+    }
 
     override fun ensurePathExists() {
         val directory = File(path)
