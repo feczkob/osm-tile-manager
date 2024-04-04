@@ -42,9 +42,9 @@ class FetchableArea(
                 launch {
                     FetchableZoom(
                         Zoom(
-                            area = area,
                             level = zoomLevel,
-                            colRange = area.topLeftTile(zoomLevel).rangeX(area.bottomRightTile(zoomLevel)),
+                            colRange = area.topLeftTile(zoomLevel).rangeX(calculateBottomRight(zoomLevel)),
+                            rowRange = area.topLeftTile(zoomLevel).rangeY(calculateBottomRight(zoomLevel)),
                         ),
                         basePath = path,
                     ).fetch()
@@ -68,4 +68,7 @@ class FetchableArea(
                 area.printToConsole(),
         )
     }
+
+    // bottom right tile's bottom right point is returned as top left point of the bottom right tile + (1, 1) by enclosingTile()
+    private fun calculateBottomRight(level: Int) = area.bottomRightTile(level) - (1 to 1)
 }
