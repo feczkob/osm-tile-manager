@@ -14,8 +14,7 @@ class Zoom(
 
     private val topLeft = area.topLeftTile(level)
 
-    // bottom right tile's bottom right point is returned as top left point of the bottom right tile + (1, 1) by enclosingTile()
-    private val bottomRight = area.bottomRightTile(level) - (1 to 1)
+    private val bottomRight = calculateBottomRight(area)
 
     // it's not ensured to be a square
     private val columns: Set<Column> =
@@ -27,6 +26,13 @@ class Zoom(
         printHeader()
         fetchColumns()
         printFooter()
+    }
+
+    override fun ensurePathExists() {
+        val directory = File(path)
+        if (!directory.exists()) {
+            directory.mkdirs()
+        }
     }
 
     private suspend fun fetchColumns() {
@@ -47,10 +53,6 @@ class Zoom(
         println("Zoom level $level is finished")
     }
 
-    override fun ensurePathExists() {
-        val directory = File(path)
-        if (!directory.exists()) {
-            directory.mkdirs()
-        }
-    }
+    // bottom right tile's bottom right point is returned as top left point of the bottom right tile + (1, 1) by enclosingTile()
+    private fun calculateBottomRight(area: Area) = area.bottomRightTile(level) - (1 to 1)
 }
