@@ -6,14 +6,14 @@ import kotlinx.coroutines.launch
 import java.io.File
 
 class FetchableColumn(
-    private val column: Column,
+    column: Column,
     basePath: String,
 ) : Fetchable {
     override val path = column.printToPath(basePath)
 
     private val tiles: Set<FetchableTile> =
-        column.top().rangeY(column.bottom()).map { y ->
-            FetchableTile(column.createTile(y), path)
+        column.tiles().map { tile ->
+            FetchableTile(tile, path)
         }.toSet()
 
     override suspend fun generate() =

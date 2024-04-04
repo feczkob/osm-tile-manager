@@ -1,6 +1,7 @@
 package com.feczkob.osmtiles.generatable
 
 import com.feczkob.osmtiles.model.Area
+import com.feczkob.osmtiles.model.Zoom
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import java.io.File
@@ -38,7 +39,16 @@ class FetchableArea(
     private suspend fun fetchZooms() =
         coroutineScope {
             (zoom.first..zoom.last).forEach { zoomLevel ->
-                launch { Zoom(level = zoomLevel, area = area, basePath = path).fetch() }
+                launch {
+                    FetchableZoom(
+                        Zoom(
+                            area = area,
+                            level = zoomLevel,
+                            colRange = area.topLeftTile(zoomLevel).rangeX(area.bottomRightTile(zoomLevel)),
+                        ),
+                        basePath = path,
+                    ).fetch()
+                }
             }
         }
 
