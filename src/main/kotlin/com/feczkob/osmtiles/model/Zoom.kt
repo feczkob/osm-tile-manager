@@ -13,5 +13,5 @@ class Zoom(
 
     fun printFooter() = println("Zoom level $level is finished")
 
-    private fun createColumn(x: Int): Column = Column(level, rowRange, x)
+    private fun createColumn(x: Int): Column = Column(level, x, rowRange)
 }

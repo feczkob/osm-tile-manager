@@ -27,9 +27,7 @@ class FetchableTile(
 
     override fun ensurePathExists() = require(File(basePath).exists()) { "Base path must exist." }
 
-    private fun printError() {
-        println("Failed to fetch tile.")
-    }
+    private fun printError() = println("Failed to fetch tile.")
 
     private fun fetchTile(): ByteArray? =
         try {

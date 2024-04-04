@@ -32,8 +32,6 @@ class Tile(
 
     fun printToUrl() = "$zoomLevel/$x/$y.png"
 
-    fun printToUrlASDS() = "$zoomLevel/$x/$y.png"
-
     fun printToPath(basePath: String) = "$basePath/$y"
 
     operator fun plus(op: Pair<Int, Int>) = Tile(zoomLevel, x + op.first, y + op.second)

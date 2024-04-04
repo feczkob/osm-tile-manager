@@ -12,11 +12,12 @@ class Area(
 
     fun bottomRightTile(zoom: Int): Tile = bottomRight.enclosingTile(zoom)
 
+    // TODO how to solve the printing?
+    // TODO lazy init?
+
     fun printToConsole() = "Top left: ${topLeft.printToConsole()},\nBottom right: ${bottomRight.printToConsole()}"
 
-    fun printToReadme() =
-        "`topLeft:` ${topLeft.printToReadme()}" +
-            "`bottomRight:` ${bottomRight.printToReadme()}"
+    fun printToReadme() = "`topLeft:` ${topLeft.printToReadme()} `bottomRight:` ${bottomRight.printToReadme()}"
 
     fun zooms(zoomLevels: IntRange): Set<Zoom> = zoomLevels.map { createZoom(it) }.toSet()
 
