@@ -18,9 +18,9 @@ class FetchableZoom(
         }.toSet()
 
     override suspend fun generate() {
-        zoom.printHeader()
+        printHeader()
         fetchColumns()
-        zoom.printFooter()
+        printFooter()
     }
 
     override fun ensurePathExists() {
@@ -39,4 +39,8 @@ class FetchableZoom(
             }
         }
     }
+
+    private fun printFooter(): Unit = println("${zoom.printLevel()} is finished")
+
+    private fun printHeader() = println("Fetching ${zoom.printLevel()}...")
 }

@@ -12,14 +12,11 @@ class Area(
 
     fun bottomRightTile(zoom: Int): Tile = bottomRight.enclosingTile(zoom)
 
-    // TODO how to solve the printing?
-    // TODO lazy init?
-
-    fun printToConsole() = "Top left: ${topLeft.printToConsole()},\nBottom right: ${bottomRight.printToConsole()}"
+    fun zooms(zoomLevels: IntRange): Set<Zoom> = zoomLevels.map { createZoom(it) }.toSet()
 
     fun printToReadme() = "`topLeft:` ${topLeft.printToReadme()} `bottomRight:` ${bottomRight.printToReadme()}"
 
-    fun zooms(zoomLevels: IntRange): Set<Zoom> = zoomLevels.map { createZoom(it) }.toSet()
+    fun printToConsole() = "Top left: ${topLeft.printToConsole()},\nBottom right: ${bottomRight.printToConsole()}"
 
     private fun createZoom(level: Int): Zoom = Zoom(level, colRange(level), rowRange(level))
 
@@ -29,6 +26,4 @@ class Area(
 
     // bottom right tile's bottom right point is returned as top left point of the bottom right tile + (1, 1) by enclosingTile()
     private fun calculateBottomRight(level: Int) = bottomRightTile(level) - (1 to 1)
-
-    override fun toString(): String = "Area(topLeft=$topLeft, bottomRight=$bottomRight)"
 }
