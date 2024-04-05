@@ -7,14 +7,14 @@ import java.io.File
 
 class FetchableZoom(
     private val zoom: Zoom,
-    basePath: String,
-) : Fetchable {
-    override val path = zoom.printToPath(basePath)
+    private val basePath: String,
+) : Fetchable() {
+    override fun path() = zoom.printToPath(basePath)
 
     // it's not ensured to be a square
     private val columns: Set<FetchableColumn> =
         zoom.cols().map { column ->
-            FetchableColumn(column, path)
+            FetchableColumn(column, path())
         }.toSet()
 
     override suspend fun generate() {
@@ -24,7 +24,7 @@ class FetchableZoom(
     }
 
     override fun ensurePathExists() {
-        val directory = File(path)
+        val directory = File(path())
         if (!directory.exists()) {
             directory.mkdirs()
         }

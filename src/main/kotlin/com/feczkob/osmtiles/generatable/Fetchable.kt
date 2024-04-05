@@ -1,14 +1,14 @@
 package com.feczkob.osmtiles.generatable
 
-interface Fetchable {
-    val path: String
+abstract class Fetchable {
+    abstract fun path(): String
 
     suspend fun fetch() {
         ensurePathExists()
         generate()
     }
 
-    suspend fun generate()
+    abstract fun ensurePathExists()
 
-    fun ensurePathExists()
+    abstract suspend fun generate()
 }

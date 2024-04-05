@@ -10,8 +10,8 @@ import java.net.URL
 class FetchableTile(
     private val tile: Tile,
     private val basePath: String,
-) : Fetchable {
-    override val path = tile.printToPath(basePath)
+) : Fetchable() {
+    override fun path() = tile.printToPath(basePath)
 
     override suspend fun generate() =
         coroutineScope {
@@ -44,7 +44,7 @@ class FetchableTile(
         }
 
     private fun saveTile(fetchedData: ByteArray) {
-        FileOutputStream("$path.png").use { outputStream ->
+        FileOutputStream("${path()}.png").use { outputStream ->
             outputStream.buffered().use { it.write(fetchedData) }
         }
     }
