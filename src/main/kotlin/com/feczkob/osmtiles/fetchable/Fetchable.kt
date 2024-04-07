@@ -1,4 +1,4 @@
-package com.feczkob.osmtiles.generatable
+package com.feczkob.osmtiles.fetchable
 
 abstract class Fetchable {
     abstract fun path(): String

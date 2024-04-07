@@ -1,4 +1,4 @@
-package com.feczkob.osmtiles.generatable
+package com.feczkob.osmtiles.fetchable
 
 import com.feczkob.osmtiles.model.Tile
 import kotlinx.coroutines.coroutineScope

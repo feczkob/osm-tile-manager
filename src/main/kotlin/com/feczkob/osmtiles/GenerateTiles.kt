@@ -1,6 +1,6 @@
 package com.feczkob.osmtiles
 
-import com.feczkob.osmtiles.generatable.FetchableArea
+import com.feczkob.osmtiles.fetchable.FetchableArea
 import com.feczkob.osmtiles.model.Area
 import com.feczkob.osmtiles.model.Point
 import io.github.cdimascio.dotenv.Dotenv
