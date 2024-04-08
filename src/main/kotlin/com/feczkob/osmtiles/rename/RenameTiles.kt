@@ -2,6 +2,7 @@ package com.feczkob.osmtiles.rename
 
 import io.github.cdimascio.dotenv.Dotenv
 import java.io.File
+import java.nio.file.Files
 
 private const val TILES_PATH = "TILES_PATH"
 private const val ENVIRONMENT_VARIABLE_IS_NOT_SET = "environment variable is not set"
@@ -23,10 +24,10 @@ fun renameFilesAndDirectories(file: File) {
             if (f.isDirectory) {
                 renameFilesAndDirectories(f)
                 val newDirectoryName = File(file, index.toString())
-                f.renameTo(newDirectoryName)
+                Files.move(f.toPath(), newDirectoryName.toPath())
             } else {
                 val newFileName = File(file, "$index.png")
-                f.renameTo(newFileName)
+                Files.move(f.toPath(), newFileName.toPath())
             }
         }
 }

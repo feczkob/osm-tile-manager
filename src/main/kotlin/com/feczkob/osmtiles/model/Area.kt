@@ -24,6 +24,5 @@ class Area(
 
     private fun rowRange(zoom: Int): IntRange = topLeftTile(zoom).rangeY(calculateBottomRight(zoom))
 
-    // bottom right tile's bottom right point is returned as top left point of the bottom right tile + (1, 1) by enclosingTile()
     private fun calculateBottomRight(level: Int) = bottomRightTile(level) - (1 to 1)
 }

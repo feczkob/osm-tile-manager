@@ -4,6 +4,9 @@ import kotlin.math.PI
 import kotlin.math.atan
 import kotlin.math.sinh
 
+private const val MIN_LON = -180.0
+private const val RANGE_LON = 360.0
+
 class Tile(
     private val zoomLevel: Int,
     private val x: Int,
@@ -12,7 +15,7 @@ class Tile(
     // * https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames
     fun topLeft(): Point {
         val n = 1 shl zoomLevel
-        val lonDeg = x.toDouble() / n * 360.0 - 180.0
+        val lonDeg = x.toDouble() / n * RANGE_LON + MIN_LON
         val latRad = atan(sinh(PI * (1 - 2 * y.toDouble() / n)))
         val latDeg = Math.toDegrees(latRad)
         return Point(latDeg, lonDeg)
@@ -20,7 +23,7 @@ class Tile(
 
     fun bottomRight(): Point {
         val n = 1 shl zoomLevel
-        val lonDeg = (x + 1).toDouble() / n * 360.0 - 180.0
+        val lonDeg = (x + 1).toDouble() / n * RANGE_LON + MIN_LON
         val latRad = atan(sinh(PI * (1 - 2 * (y + 1).toDouble() / n)))
         val latDeg = Math.toDegrees(latRad)
         return Point(latDeg, lonDeg)

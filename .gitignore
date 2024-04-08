@@ -41,5 +41,7 @@ bin/
 ### Mac OS ###
 .DS_Store
 /.idea/
+
 /tiles/
 .env
+default-detekt-config.yml

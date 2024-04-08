@@ -9,7 +9,7 @@ class Zoom(
 
     fun cols(): Set<Column> = colRange.map { createColumn(it) }.toSet()
 
-    fun printLevel() = println("Zoom level $level")
+    fun printLevel() = "Zoom level $level"
 
     private fun createColumn(x: Int): Column = Column(level, x, rowRange)
 }
