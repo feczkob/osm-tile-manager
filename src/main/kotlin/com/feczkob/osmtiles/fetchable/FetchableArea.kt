@@ -8,6 +8,7 @@ import kotlin.time.Duration
 import kotlin.time.measureTime
 
 private const val MAX_ZOOM = 18
+private const val MIN_ZOOM = 0
 
 class FetchableArea(
     private val area: Area,
@@ -18,8 +19,8 @@ class FetchableArea(
 
     init {
         require(!zoomLevels.isEmpty()) { "Zoom range must not be empty." }
-        require(zoomLevels.first in 0..MAX_ZOOM) { "Start zoom must be between 0 and 18." }
-        require(zoomLevels.last in 0..MAX_ZOOM) { "End zoom must be between 0 and 18." }
+        require(zoomLevels.first in MIN_ZOOM..MAX_ZOOM) { "Start zoom must be between $MIN_ZOOM and $MAX_ZOOM." }
+        require(zoomLevels.last in MIN_ZOOM..MAX_ZOOM) { "End zoom must be between $MIN_ZOOM and $MAX_ZOOM." }
     }
 
     private fun area() =

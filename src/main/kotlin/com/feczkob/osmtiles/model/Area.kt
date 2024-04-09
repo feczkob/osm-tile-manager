@@ -5,7 +5,7 @@ class Area(
     private val bottomRight: Point,
 ) {
     init {
-        require(topLeft > bottomRight) { "Top left corner must be above the bottom right corner." }
+        require(topLeft > bottomRight) { "Top left corner must be above and to the right of the bottom right corner." }
     }
 
     fun topLeftTile(zoom: Int): Tile = topLeft.enclosingTile(zoom)
