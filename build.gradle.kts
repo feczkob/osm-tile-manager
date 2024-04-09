@@ -13,6 +13,13 @@ repositories {
 dependencies {
     implementation("io.github.cdimascio:dotenv-java:2.2.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
+
+    testImplementation("com.tngtech.archunit:archunit-junit5:1.2.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }
 
 kotlin {
